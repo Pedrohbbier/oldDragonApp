@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dragon_gold">#D4AF37</color>
+    <color name="dragon_red">#8B0000</color>
+    <color name="dragon_black">#1A1A1A</color>
+    <color name="dragon_silver">#C0C0C0</color>
+    <color name="parchment">#F4F1DE</color>
+    <color name="dark_parchment">#E8E5D0</color>
+    <color name="ink_black">#2C2C2C</color>
+    <color name="medieval_blue">#1E3A8A</color>
+</resources>

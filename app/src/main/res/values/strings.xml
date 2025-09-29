@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Old Dragon</string>
+    <string name="create_character">Criar Personagem</string>
+    <string name="character_name">Nome do Personagem</string>
+    <string name="select_race">Selecionar Raça</string>
+    <string name="select_class">Selecionar Classe</string>
+    <string name="select_alignment">Selecionar Alinhamento</string>
+    <string name="attributes">Atributos</string>
+    <string name="strength">Força</string>
+    <string name="dexterity">Destreza</string>
+    <string name="constitution">Constituição</string>
+    <string name="intelligence">Inteligência</string>
+    <string name="wisdom">Sabedoria</string>
+    <string name="charisma">Carisma</string>
+    <string name="roll_attributes">Rolar Atributos</string>
+    <string name="classic_distribution">Distribuição Clássica</string>
+    <string name="heroic_distribution">Distribuição Heróica</string>
+    <string name="adventurer_distribution">Distribuição Aventureiro</string>
+    <string name="create">Criar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="back">Voltar</string>
+</resources>
