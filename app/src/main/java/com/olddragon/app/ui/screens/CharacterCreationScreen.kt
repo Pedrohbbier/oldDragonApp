@@ -78,7 +78,7 @@ fun CharacterCreationScreen(
                 character = viewModel.character,
                 onDismiss = { showCharacterSummary = false },
                 onConfirm = {
-                    // Salva o personagem
+                    // Save the character
                     viewModel.createCharacter()
                     showCharacterSummary = false
                     onBackClick()
@@ -574,7 +574,7 @@ fun CharacterSummaryDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    // Criar e salvar o personagem
+                    // Create and save the character
                     onConfirm()
                 },
                 colors = ButtonDefaults.buttonColors(

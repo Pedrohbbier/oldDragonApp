@@ -4,14 +4,14 @@ class Wizard : CharacterClass(
     className = "Mago",
     hitDie = 4,
     primaryAttribute = "int",
-    allowedArmor = listOf("Nenhuma"),
-    allowedWeapons = listOf("Adaga", "Cajado", "Dardo")
+    allowedArmor = listOf("None"),
+    allowedWeapons = listOf("Dagger", "Staff", "Dart")
 ) {
     override fun getClassFeatures(level: Byte): List<String> {
         val features = mutableListOf<String>()
-        features.add("Conjuração de magias")
-        features.add("Leitura de magias")
-        if (level >= 3) features.add("Criação de itens mágicos")
+        features.add("Spellcasting")
+        features.add("Read magic")
+        if (level >= 3) features.add("Magic item creation")
         return features
     }
 

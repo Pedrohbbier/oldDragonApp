@@ -4,14 +4,14 @@ class Fighter : CharacterClass(
     className = "Guerreiro",
     hitDie = 8,
     primaryAttribute = "str",
-    allowedArmor = listOf("Todas"),
-    allowedWeapons = listOf("Todas")
+    allowedArmor = listOf("All"),
+    allowedWeapons = listOf("All")
 ) {
     override fun getClassFeatures(level: Byte): List<String> {
         val features = mutableListOf<String>()
-        features.add("Ataque múltiplo")
-        if (level >= 3) features.add("Especialização em combate")
-        if (level >= 5) features.add("Liderança")
+        features.add("Multiple attacks")
+        if (level >= 3) features.add("Combat specialization")
+        if (level >= 5) features.add("Leadership")
         return features
     }
 

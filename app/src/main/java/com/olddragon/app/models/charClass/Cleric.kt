@@ -1,17 +1,17 @@
 package com.olddragon.app.models.charClass
 
 class Cleric : CharacterClass(
-    className = "Clérico",
+    className = "Clérigo",
     hitDie = 6,
     primaryAttribute = "wis",
-    allowedArmor = listOf("Todas exceto placas"),
-    allowedWeapons = listOf("Maça", "Martelo", "Cajado")
+    allowedArmor = listOf("All except plate"),
+    allowedWeapons = listOf("Mace", "Hammer", "Staff")
 ) {
     override fun getClassFeatures(level: Byte): List<String> {
         val features = mutableListOf<String>()
-        features.add("Conjuração de magias divinas")
-        features.add("Expulsar mortos-vivos")
-        if (level >= 3) features.add("Curar ferimentos")
+        features.add("Divine spellcasting")
+        features.add("Turn undead")
+        if (level >= 3) features.add("Cure wounds")
         return features
     }
 

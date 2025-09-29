@@ -138,26 +138,26 @@ open class Character {
 
     fun getCharacterSummary(): String {
         val sb = StringBuilder()
-        sb.appendLine("=== PERSONAGEM ===")
-        sb.appendLine("Nome: $name")
-        sb.appendLine("Nível: $level")
+        sb.appendLine("=== CHARACTER ===")
+        sb.appendLine("Name: $name")
+        sb.appendLine("Level: $level")
         sb.appendLine("HP: $hp")
         sb.appendLine("XP: $xp")
-        sb.appendLine("Raça: ${race?.raceName ?: "Não definida"}")
-        sb.appendLine("Classe: ${characterClass?.className ?: "Não definida"}")
-        sb.appendLine("Alinhamento: ${alignment?.displayName ?: "Não definido"}")
+        sb.appendLine("Race: ${race?.raceName ?: "Not defined"}")
+        sb.appendLine("Class: ${characterClass?.className ?: "Not defined"}")
+        sb.appendLine("Alignment: ${alignment?.displayName ?: "Not defined"}")
         sb.appendLine()
-        sb.appendLine("=== ATRIBUTOS ===")
+        sb.appendLine("=== ATTRIBUTES ===")
         skills.forEach { (attr, value) ->
             val mod = skillMod[attr] ?: 0
             val modStr = if (mod >= 0) "+$mod" else "$mod"
             val attrName = when (attr) {
-                "str" -> "Força"
-                "dex" -> "Destreza"
-                "con" -> "Constituição"
-                "int" -> "Inteligência"
-                "wis" -> "Sabedoria"
-                "cha" -> "Carisma"
+                "str" -> "Strength"
+                "dex" -> "Dexterity"
+                "con" -> "Constitution"
+                "int" -> "Intelligence"
+                "wis" -> "Wisdom"
+                "cha" -> "Charisma"
                 else -> attr.uppercase()
             }
             sb.appendLine("$attrName: $value ($modStr)")

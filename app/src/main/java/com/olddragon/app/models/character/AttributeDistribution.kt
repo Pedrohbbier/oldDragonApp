@@ -61,13 +61,13 @@ class AttributeDistribution {
 
         for ((attr, points) in pointsDistribution) {
             if (points < 0 || points > 15) {
-                throw IllegalArgumentException("Pontos para $attr devem estar entre 0 e 15")
+                throw IllegalArgumentException("Points for $attr must be between 0 and 15")
             }
             totalPoints += points
         }
 
         if (totalPoints > 27) {
-            throw IllegalArgumentException("Total de pontos não pode exceder 27")
+            throw IllegalArgumentException("Total points cannot exceed 27")
         }
 
         attributes["str"] = (baseValue + (pointsDistribution["str"] ?: 0)).toByte()

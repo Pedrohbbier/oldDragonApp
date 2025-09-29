@@ -16,9 +16,9 @@ class CharacterStorage(context: Context) {
 
     fun saveCharacter(character: Character) {
         try {
-            Log.d("CharacterStorage", "Salvando personagem: ${character.name}")
+            Log.d("CharacterStorage", "Saving character: ${character.name}")
 
-            // Cria um objeto simples para salvar
+            // Create a simple object to save
             val simpleCharacter = SimpleCharacter(
                 name = character.name,
                 level = character.level,
@@ -34,13 +34,13 @@ class CharacterStorage(context: Context) {
 
             val characters = getAllSimpleCharacters().toMutableList()
 
-            // Remove personagem existente com mesmo nome
+            // Remove existing character with same name
             characters.removeAll { it.name == character.name }
 
-            // Adiciona o novo personagem no início
+            // Add new character at the beginning
             characters.add(0, simpleCharacter)
 
-            // Mantém apenas os 10 personagens mais recentes
+            // Keep only the 10 most recent characters
             if (characters.size > 10) {
                 characters.subList(10, characters.size).clear()
             }
@@ -48,13 +48,13 @@ class CharacterStorage(context: Context) {
             val charactersJson = gson.toJson(characters)
             val success = sharedPreferences.edit()
                 .putString("saved_characters", charactersJson)
-                .commit() // Usar commit() em vez de apply() para garantir que salve
+                .commit() // Use commit() instead of apply() to ensure save
 
-            Log.d("CharacterStorage", "Personagem salvo com sucesso: $success")
-            Log.d("CharacterStorage", "Total de personagens: ${characters.size}")
+            Log.d("CharacterStorage", "Character saved successfully: $success")
+            Log.d("CharacterStorage", "Total characters: ${characters.size}")
 
         } catch (e: Exception) {
-            Log.e("CharacterStorage", "Erro ao salvar personagem", e)
+            Log.e("CharacterStorage", "Error saving character", e)
         }
     }
 
@@ -65,7 +65,7 @@ class CharacterStorage(context: Context) {
                 val type = object : TypeToken<List<SimpleCharacter>>() {}.type
                 gson.fromJson(charactersJson, type) ?: emptyList()
             } catch (e: Exception) {
-                Log.e("CharacterStorage", "Erro ao deserializar personagens", e)
+                Log.e("CharacterStorage", "Error deserializing characters", e)
                 emptyList()
             }
         } else {
@@ -84,17 +84,17 @@ class CharacterStorage(context: Context) {
             character.skillMod = simple.skillMod
             character.atributes = simple.atributes
 
-            // Reconstituir raça
+            // Reconstitute race
             simple.raceName?.let { raceName ->
                 character.race = Races.listAll().find { it.raceName == raceName }
             }
 
-            // Reconstituir classe
+            // Reconstitute class
             simple.className?.let { className ->
                 character.characterClass = com.olddragon.app.models.charClass.CharacterClasses.listAll().find { it.className == className }
             }
 
-            // Reconstituir alinhamento
+            // Reconstitute alignment
             simple.alignmentName?.let { alignmentName ->
                 character.alignment = Alignment.values().find { it.name == alignmentName }
             }
