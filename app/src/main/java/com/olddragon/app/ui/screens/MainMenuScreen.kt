@@ -29,14 +29,14 @@ import com.olddragon.app.viewmodel.MainMenuViewModel
 @Composable
 fun MainMenuScreen(
     onCreateCharacterClick: () -> Unit,
+    onBattleClick: () -> Unit = {},
     onLoadCharacterClick: (String) -> Unit = {},
     viewModel: MainMenuViewModel = viewModel()
 ) {
     var showCharacterList by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        viewModel.loadCharacters()
-    }
+    val hasCharacters by viewModel.hasCharacters.collectAsState()
+    val savedCharacters by viewModel.savedCharacters.collectAsState()
+    val activeCharacter by viewModel.activeCharacter.collectAsState()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -137,7 +137,7 @@ fun MainMenuScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        enabled = viewModel.hasCharacters,
+                        enabled = hasCharacters,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MedievalBlue,
                             contentColor = Parchment,
@@ -147,8 +147,30 @@ fun MainMenuScreen(
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Text(
-                            text = if (viewModel.hasCharacters) "Carregar Personagem" else "Nenhum Personagem Salvo",
+                            text = if (hasCharacters) "Carregar Personagem" else "Nenhum Personagem Salvo",
                             fontSize = 16.sp
+                        )
+                    }
+
+                    // Battle Button
+                    Button(
+                        onClick = onBattleClick,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
+                        enabled = activeCharacter != null,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = DragonRed,
+                            contentColor = Parchment,
+                            disabledContainerColor = DragonSilver.copy(alpha = 0.3f),
+                            disabledContentColor = InkBlack.copy(alpha = 0.5f)
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text(
+                            text = if (activeCharacter != null) "Iniciar Batalha" else "Selecione um Personagem",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     }
 
@@ -187,8 +209,9 @@ fun MainMenuScreen(
     // Character List Dialog
     if (showCharacterList) {
         CharacterListDialog(
-            characters = viewModel.savedCharacters,
+            characters = savedCharacters,
             onCharacterSelect = { character ->
+                viewModel.setActiveCharacter(character)
                 showCharacterList = false
                 onLoadCharacterClick(character.name)
             },

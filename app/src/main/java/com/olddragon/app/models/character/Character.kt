@@ -5,6 +5,7 @@ import kotlin.math.floor
 
 open class Character {
 
+    var id: Long = 0
     var name: String
     var level: Byte
     var hp: Byte

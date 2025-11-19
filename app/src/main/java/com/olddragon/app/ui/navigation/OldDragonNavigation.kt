@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.olddragon.app.ui.screens.BattleScreen
 import com.olddragon.app.ui.screens.CharacterCreationScreen
 import com.olddragon.app.ui.screens.MainMenuScreen
 
@@ -19,6 +20,9 @@ fun OldDragonNavigation() {
             MainMenuScreen(
                 onCreateCharacterClick = {
                     navController.navigate("character_creation")
+                },
+                onBattleClick = {
+                    navController.navigate("battle")
                 }
             )
         }
@@ -26,6 +30,14 @@ fun OldDragonNavigation() {
         composable("character_creation") {
             CharacterCreationScreen(
                 onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable("battle") {
+            BattleScreen(
+                onNavigateBack = {
                     navController.popBackStack()
                 }
             )

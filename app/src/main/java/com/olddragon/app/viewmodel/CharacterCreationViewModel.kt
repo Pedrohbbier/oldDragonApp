@@ -5,13 +5,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.olddragon.app.data.database.OldDragonDatabase
+import com.olddragon.app.data.repository.CharacterRepository
 import com.olddragon.app.models.character.*
 import com.olddragon.app.models.charClass.CharacterClass
 import com.olddragon.app.models.charClass.CharacterClasses
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class CharacterCreationViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val characterStorage = CharacterStorage(application)
+    private val database = OldDragonDatabase.getDatabase(application)
+    private val characterRepository = CharacterRepository(database.characterDao())
 
     var character by mutableStateOf(Character())
         private set
@@ -88,26 +97,27 @@ class CharacterCreationViewModel(application: Application) : AndroidViewModel(ap
                             selectedAlignment != null
     }
 
-    fun createCharacter(): Character {
+    val allCharacters: StateFlow<List<Character>> = characterRepository.getAllCharacters()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun createCharacter(onComplete: (Long) -> Unit = {}) {
         if (isCharacterComplete) {
-            characterStorage.saveCharacter(character)
-        }
-        return character
-    }
-
-    fun loadLastCharacter() {
-        characterStorage.getLastCharacter()?.let { savedCharacter ->
-            character = savedCharacter
-            characterName = savedCharacter.name
-            selectedRace = savedCharacter.race
-            selectedClass = savedCharacter.characterClass
-            selectedAlignment = savedCharacter.alignment
-            checkCharacterComplete()
+            viewModelScope.launch {
+                val id = characterRepository.saveCharacter(character)
+                // Define como personagem ativo
+                characterRepository.setActiveCharacter(id)
+                onComplete(id)
+            }
         }
     }
 
-    fun getAllSavedCharacters(): List<Character> {
-        return characterStorage.getAllCharacters()
+    fun loadCharacter(character: Character) {
+        this.character = character
+        characterName = character.name
+        selectedRace = character.race
+        selectedClass = character.characterClass
+        selectedAlignment = character.alignment
+        checkCharacterComplete()
     }
 
     fun getAvailableRaces(): List<Race> = Races.listAll()
